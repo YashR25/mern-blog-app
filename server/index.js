@@ -38,6 +38,21 @@ cloudinary.config({
   api_secret: `${process.env.CLOUDINARY_SECRET_KEY}`,
 });
 
+app.get("/postDummyData", async (req, res) => {
+  const createdBlog = await Blog.create({
+    title: "title",
+    thumbnail: {
+      url: "cloudImage.url",
+    },
+    content: "content",
+    views: 0,
+    likes: 0,
+    comments: [],
+    category: "category",
+  });
+  res.send(createdBlog);
+});
+
 app.get("/getLatestBlogs?", async (req, res) => {
   const { page, limit } = req.query;
   const skip = (Number(page) - 1) * Number(limit);
